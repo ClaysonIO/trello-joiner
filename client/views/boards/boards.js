@@ -67,35 +67,57 @@ var fillTarget = function(){
       if (error != 'success'){
         console.log(error);
       } else {
-        var newList = {
-          name: doc.name,
-          cards: []
-        }
+        var cardArray = [];
+
         for(var i = 0; i < result.length; i ++){
-          newList.cards.push(result[i].name)
+          cardArray.push({
+            cardName: result[i].name,
+            boardName: doc.name,
+            sourceIdBoard: doc.idBoard
+          })
         }
 
         if(targetBoard){
           console.log(targetBoard);
           //Check to see if there's already a list on this board
-          console.log("idBoard:", targetBoard.idBoard, "name:", doc.name)
           var thisList = Lists.findOne({idBoard: targetBoard.idBoard, name: doc.name});
           if(thisList){
-
+            addCards(thisList.idList, cardArray);
           } else {
             Trello.post("/lists/", {name: doc.name, idBoard: targetBoard.idBoard}, function(result, error){
-              console.log("RESULT", result, "ERROR", error);
               Meteor.call('upsertList', {
                 idList: result.id,
                 name: result.name,
                 idBoard: result.idBoard
               });
+              addCards(result.id, cardArray);
             })
           }
         }
       }
     })
   })
+}
+
+var addCards = function(idList, cardArray){
+  for(var i = 0; i < cardArray.length; i++){
+    console.log(cardArray[i]);
+    var sourceIdBoard = cardArray[i].sourceIdBoard;
+    var thisCard = Cards.findOne({name: cardArray[i].cardName, sourceIdBoard: cardArray[i].sourceIdBoard})
+    if(thisCard){
+
+    } else {
+      Trello.post("/cards/", {name: cardArray[i].cardName, idList: idList, due: null, urlSource: null}, function(result, error){
+        Meteor.call('upsertCard', {
+          idCard: result.id,
+          idList: idList,
+          sourceIdBoard: sourceIdBoard,
+          name: result.name,
+          desc: ""
+        });
+      })
+    }
+  }
 }
 
 var getBoardLists = function(board){

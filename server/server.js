@@ -29,14 +29,14 @@ Meteor.startup(function(){
     },
     upsertCard: function(cardObject){
 
-      Lists.upsert({
+      Cards.upsert({
         idCard: cardObject.idCard
       }, {
         $set: {
           owner_id: Meteor.userId(),
           idCard: cardObject.idCard,
           idList: cardObject.idList,
-          idBoard: cardObject.idBoard,
+          sourceIdBoard: cardObject.sourceIdBoard,
           name: cardObject.name,
           desc: cardObject.desc,
         }
