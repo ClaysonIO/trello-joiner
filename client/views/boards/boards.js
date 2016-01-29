@@ -141,14 +141,14 @@ var getBoards = function(){
     for(var i = 0; i < result.idBoards.length; i++){
       Trello.boards.get(result.idBoards[i], function(resultBoard, errBoard){
         console.log(resultBoard);
-
-        Meteor.call('upsertBoard', {
-          owner_id: Meteor.userId(),
-          idBoard: resultBoard.id,
-          name: resultBoard.name,
-          url: resultBoard.url
-        });
-
+        if(!resultBoard.closed){
+          Meteor.call('upsertBoard', {
+            owner_id: Meteor.userId(),
+            idBoard: resultBoard.id,
+            name: resultBoard.name,
+            url: resultBoard.url
+          });
+        }
       })
     }
   })
