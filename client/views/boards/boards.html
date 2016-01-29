@@ -1,0 +1,32 @@
+<Template name="boards">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-1">
+
+                <h1>Boards</h1>
+
+                <button class="btn btn-success btn-block" id="trelloLogin">Authorize</button>
+                <button class="btn btn-info btn-block" id="getBoards">Get Boards</button>
+                <button class="btn btn-warning btn-block" id="fillTarget">FillTarget</button>
+            </div>
+            <div class="col-md-4">
+
+                <table class="table table-condensed">
+                    <tbody>
+                        {{#each allBoards}}
+                        <tr data-board_id="{{_id}}">
+                            <td>{{name}}</td>
+                            <td>
+                                <button class="btn {{isSelectedSource}} selectSourceBoard btn-xs">Source</button>
+                            </td>
+                            <td>
+                                <button class="btn {{isSelectedTarget}} selectTargetBoard btn-xs">Target</button>
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</Template>
