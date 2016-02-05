@@ -4,4 +4,8 @@
 
     {{> loginButtons}}
 
+
+    {{#if currentUser}}
+    <a href="{{pathFor 'boards'}}">Boards</a>
+    {{/if}}
 </Template>

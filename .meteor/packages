@@ -28,3 +28,4 @@ accounts-ui
 aknudsen:trello-client
 kadira:blaze-layout
 reactive-var
+arillo:flow-router-helpers

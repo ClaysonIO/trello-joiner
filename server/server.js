@@ -4,10 +4,10 @@ Meteor.startup(function(){
     upsertBoard: function(boardObject){
 
       Boards.upsert({
-        idBoard: boardObject.idBoard
+        idBoard: boardObject.idBoard,
+        owner_id: Meteor.userId()
       }, {
         $set: {
-          owner_id: Meteor.userId(),
           idBoard: boardObject.idBoard,
           name: boardObject.name,
           url: boardObject.url
@@ -17,10 +17,10 @@ Meteor.startup(function(){
     upsertList: function(listObject){
 
       Lists.upsert({
-        idList: listObject.idList
+        idList: listObject.idList,
+        owner_id: Meteor.userId()
       }, {
         $set: {
-          owner_id: Meteor.userId(),
           idList: listObject.idList,
           idBoard: listObject.idBoard,
           name: listObject.name,
@@ -30,10 +30,10 @@ Meteor.startup(function(){
     upsertCard: function(cardObject){
 
       Cards.upsert({
-        idCard: cardObject.idCard
+        idCard: cardObject.idCard,
+        owner_id: Meteor.userId()
       }, {
         $set: {
-          owner_id: Meteor.userId(),
           idCard: cardObject.idCard,
           idList: cardObject.idList,
           sourceIdBoard: cardObject.sourceIdBoard,
